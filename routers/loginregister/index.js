@@ -54,6 +54,21 @@ exports.Register = (req, res) => {
         username,
         password
     } = req.body
+    if (username === '' || password === '') {
+        return res.json({
+            code: "201",
+            message: "用户名或密码不能为空!"
+        })
+    }
+    let myreg = /^1[3456789]\d{9}$/;
+    console.log()
+    if (!myreg.test(username)) {
+        return res.json({
+            code: "202",
+            message: "手机号格式不正确"
+        })
+    }
+
     Admin.findOne({
         username: username
     }, (err, ret) => {
@@ -73,20 +88,17 @@ exports.Register = (req, res) => {
             photourl: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
             signature: '你咋不上天呢？',
         })
-        if (user.username === '' || user.password === '') {
-            return res.json({
-                code: "201",
-                message: "用户名或密码不能为空!"
-            })
-        }
-        let regName = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._-]){3,15}$/
-        let regPass = /^[a-z+A-Z+0-9+]{3,15}$/
-        if (regName.test(user.username)) {
-            return res.json({
-                code: "202",
-                message: "4到16位(字母，数字，下滑线，减号)!"
-            })
-        }
+
+        // let regName = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._-]){3,15}$/
+        // let regPass = /^[a-z+A-Z+0-9+]{3,15}$/
+        // if (regName.test(user.username)) {
+        //     return res.json({
+        //         code: "202",
+        //         message: "4到16位(字母，数字，下滑线，减号)!"
+        //     })
+        // }
+
+
         // if (regPass.test(user.password)) {
         //     return res.json({
         //         code: "203",
