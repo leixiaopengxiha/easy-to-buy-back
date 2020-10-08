@@ -3,6 +3,7 @@ let {
 } = require("../../db/user")
 let jwt = require("jsonwebtoken") // jwt 持久化登录
 // const multer = require("multer") // 上传头像
+// 登录接口
 exports.Logins = (req, res) => {
     const {
         username,
@@ -35,7 +36,7 @@ exports.Logins = (req, res) => {
                             expiresIn: "2h"
                         })
                     },
-                    msg: "登录成功!"
+                    message: "登录成功!"
                 });
             res.json({
                 code: 201,
@@ -49,6 +50,7 @@ exports.Logins = (req, res) => {
         }
     })
 }
+// 注册接口
 exports.Register = (req, res) => {
     let {
         username,
@@ -87,6 +89,9 @@ exports.Register = (req, res) => {
             nickname: username,
             photourl: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
             signature: '你咋不上天呢？',
+            fans: 0,
+            follow: 0,
+            thumbs: 0
         })
 
         // let regName = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._-]){3,15}$/
@@ -146,6 +151,9 @@ exports.Getadmin = (req, res) => {
                             photourl: ret.photourl,
                             username: ret.username,
                             signature: ret.signature,
+                            fans: ret.fans,
+                            follow: ret.follow,
+                            thumbs: ret.thumbs,
                             id: ret._id,
                             token: jwt.sign({
                                 username: ret.username

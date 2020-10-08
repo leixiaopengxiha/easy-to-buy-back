@@ -15,26 +15,29 @@ let movieSchema = new mongoose.Schema({
   nickname: String,
   photourl: String,
   signature: String,
+  fans: Number,       // 粉丝数
+  follow: Number,     // 关注数
+  thumbs: Number      // 点赞数
 }, {
   collection: 'admin'
 })
 let Admin = mongoose.model('admin', movieSchema)
 
-// // 商品表
-// let commoditySchema = new mongoose.Schema({
-//   name: String, // 商品名称
-//   image: String, // 商品图片
-//   Price: Number, // 商品价格
-//   details: String, // 商品详情介绍
-//   author: String, // 商品作者
-//   entryDate: String, // 上架时间
-//   loop: Array, // 商品详情轮播
-//   press: String, // 商品出版社
-//   classification: String // 商品类别
-// }, {
-//   collection: 'commodity'
-// })
-// let Commodity = mongoose.model('commodity', commoditySchema)
+// 闲置物品表
+let mylieidle = new mongoose.Schema({
+  name: String, // 商品名称
+  image: String, // 商品图片
+  Price: Number, // 商品价格
+  details: String, // 商品详情介绍
+  author: String, // 商品作者
+  entryDate: String, // 上架时间
+  loop: Array, // 商品详情轮播
+  press: String, // 商品出版社
+  classification: String // 商品类别
+}, {
+  collection: 'mylieidle'
+})
+let Mylieidle = mongoose.model('mylieidle', mylieidle)
 
 // // 轮播图表
 // let loopSchema = new mongoose.Schema(
@@ -80,7 +83,7 @@ let Admin = mongoose.model('admin', movieSchema)
 // 将表暴露出去
 module.exports = {
   Admin, // 用户表
-  // Loop, // 轮播图表
+  Mylieidle, // 闲置列表
   // Commodity, //商品表
   // Order, //购物车表
   // Mycommodity // 课程表
