@@ -11,7 +11,10 @@ mongoose.connect(db_url, {
 // 用户表 登录注册
 let movieSchema = new mongoose.Schema({
   username: String,
-  password: String,
+  password: {
+    type: String,
+    required: true
+  },
   nickname: String,
   photourl: String,
   signature: String,
@@ -23,21 +26,16 @@ let movieSchema = new mongoose.Schema({
 })
 let Admin = mongoose.model('admin', movieSchema)
 
-// 闲置物品表
-let mylieidle = new mongoose.Schema({
-  name: String, // 商品名称
-  image: String, // 商品图片
-  Price: Number, // 商品价格
-  details: String, // 商品详情介绍
-  author: String, // 商品作者
-  entryDate: String, // 上架时间
-  loop: Array, // 商品详情轮播
-  press: String, // 商品出版社
-  classification: String // 商品类别
+// 用户粉丝和关注详情
+let userfansSchema = new mongoose.Schema({
+  username: String,   // 用户账号
+  fans: Array,       // 用户的粉丝详情
+  follow: Array      // 用户的关注详情
 }, {
-  collection: 'mylieidle'
+  collection: 'userfans'
 })
-let Mylieidle = mongoose.model('mylieidle', mylieidle)
+let Userfans = mongoose.model('userfans', userfansSchema)
+
 
 // // 轮播图表
 // let loopSchema = new mongoose.Schema(
@@ -83,7 +81,7 @@ let Mylieidle = mongoose.model('mylieidle', mylieidle)
 // 将表暴露出去
 module.exports = {
   Admin, // 用户表
-  Mylieidle, // 闲置列表
+  Userfans,
   // Commodity, //商品表
   // Order, //购物车表
   // Mycommodity // 课程表

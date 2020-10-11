@@ -1,7 +1,6 @@
-let {
-    Admin
-} = require("../../db/user")
+let { Admin, Userfans } = require("../../db/user")
 let jwt = require("jsonwebtoken") // jwt 持久化登录
+const { json } = require("body-parser")
 // const multer = require("multer") // 上传头像
 // 登录接口
 exports.Logins = (req, res) => {
@@ -56,7 +55,7 @@ exports.Register = (req, res) => {
         username,
         password
     } = req.body
-    if (username === '' || password === '') {
+    if (username === '' || password === '' || password == undefined) {
         return res.json({
             code: "201",
             message: "用户名或密码不能为空!"
@@ -93,25 +92,7 @@ exports.Register = (req, res) => {
             follow: 0,
             thumbs: 0
         })
-
-        // let regName = /^[a-zA-Z]{1}([a-zA-Z0-9]|[._-]){3,15}$/
-        // let regPass = /^[a-z+A-Z+0-9+]{3,15}$/
-        // if (regName.test(user.username)) {
-        //     return res.json({
-        //         code: "202",
-        //         message: "4到16位(字母，数字，下滑线，减号)!"
-        //     })
-        // }
-
-
-        // if (regPass.test(user.password)) {
-        //     return res.json({
-        //         code: "203",
-        //         message: "密码最少6位，最多16位，包括至少1个大写字母，1个小写字母，1个数字，1个特殊字符(指的是._-)!"
-        //     })
-        // }
         user.save(function (err, ress) {
-
             if (err) {
                 return console.log(err)
             }
@@ -120,6 +101,13 @@ exports.Register = (req, res) => {
                 message: '注册成功',
             })
         })
+        // 在 userfans 表中添加该用户的信息
+        let userfans = new Userfans({
+            username,
+            fans: [],
+            follow: [],
+        })
+        userfans.save()
     })
 }
 //获取当前登录用户信息
@@ -129,7 +117,6 @@ exports.Getadmin = (req, res) => {
         username
     } = req.body
     jwt.verify(token, "abcd", function (err, decode) {
-        console.log(decode)
         if (err) {
             res.json({
                 code: 201,
@@ -137,6 +124,7 @@ exports.Getadmin = (req, res) => {
                 message: "登录时间已过期，请重新登录!"
             });
         } else {
+            // 查询用户的基本信息
             Admin.findOne({
                 username: username
             }, (err, ret) => {
@@ -144,27 +132,34 @@ exports.Getadmin = (req, res) => {
                     return console.log("查询失败!")
                 }
                 if (ret) {
-                    res.json({
-                        code: 200,
-                        data: {
-                            nickname: ret.nickname,
-                            photourl: ret.photourl,
-                            username: ret.username,
-                            signature: ret.signature,
-                            fans: ret.fans,
-                            follow: ret.follow,
-                            thumbs: ret.thumbs,
-                            id: ret._id,
-                            token: jwt.sign({
-                                username: ret.username
-                            }, "abcd", {
-                                // 过期时间
-                                expiresIn: "1h"
+                    // 查询粉丝和关注数
+                    Userfans.findOne({ username }, (err, rett) => {
+                        console.log(rett)
+                        if (rett) {
+                            res.json({
+                                code: 200,
+                                data: {
+                                    nickname: ret.nickname,
+                                    photourl: ret.photourl,
+                                    username: ret.username,
+                                    signature: ret.signature,
+                                    fans: rett.fans.length,
+                                    follow: rett.follow.length,
+                                    thumbs: ret.thumbs,
+                                    id: ret._id,
+                                    token: jwt.sign({
+                                        username: ret.username
+                                    }, "abcd", {
+                                        // 过期时间
+                                        expiresIn: "1h"
+                                    })
+                                }
                             })
                         }
                     })
+
                 } else {
-                    ress.json({
+                    res.json({
                         code: 202,
                         message: "Login failed, unable to get user details."
                     })
@@ -173,7 +168,6 @@ exports.Getadmin = (req, res) => {
         }
     })
 }
-
 
 
 
