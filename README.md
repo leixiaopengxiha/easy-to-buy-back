@@ -5,12 +5,12 @@
 * 请求协议: http
 * 请求方式: post
 * 请求参数: json格式
-``
+```js
     {
         "username": 用户账号,
         "password": 用户密码
     }
-``
+```
     输出参数: 
         data: 存放token信息
         code: 存放状态码
@@ -26,12 +26,12 @@
 * 请求协议: http
 * 请求方式: post
 * 请求参数: json格式
-``
+```js
     {
         "username": 用户账号,
         "password": 用户密码
     }
-``
+```
     输出参数: 
         code: 存放状态码
         message: 说明信息
@@ -46,12 +46,12 @@
 * 请求协议: http
 * 请求方式: post
 * 请求参数: json格式
-``
+```js
     {
         "username": 用户账号,
         "token": 登录时返回的token
     }
-``
+```
     输出参数: 
 				code: 状态码,
         nickname: 用户昵称,
@@ -74,11 +74,11 @@
 * 请求协议: http
 * 请求方式: post
 * 请求参数: json格式
-``
+```js
     {
         "username": 用户账号
     }
-``
+```
 		输出参数:
 				code: 状态码,
 				mag: 说明,
@@ -94,12 +94,12 @@
 * 请求协议: http
 * 请求方式: post
 * 请求参数: json格式
-``
+```js
     {
         "username": 用户账号,
 				"tousername": 被关注者的账号
     }
-``
+```
 		输出参数
 				code: 状态码,
 				msg: 说明
