@@ -125,8 +125,7 @@ exports.Register = (req, res) => {
 //获取当前登录用户信息
 exports.Getadmin = (req, res) => {
     let {
-        token,
-        username
+        token
     } = req.body
     jwt.verify(token, "abcd", function (err, decode) {
         console.log(decode)
@@ -138,7 +137,7 @@ exports.Getadmin = (req, res) => {
             });
         } else {
             Admin.findOne({
-                username: username
+                username: decode.username
             }, (err, ret) => {
                 if (err) {
                     return console.log("查询失败!")
@@ -159,7 +158,7 @@ exports.Getadmin = (req, res) => {
                                 username: ret.username
                             }, "abcd", {
                                 // 过期时间
-                                expiresIn: "1h"
+                                expiresIn: "2h"
                             })
                         }
                     })
