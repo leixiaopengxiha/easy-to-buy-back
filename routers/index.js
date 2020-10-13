@@ -1,7 +1,6 @@
 const express = require('express');
 let router = express.Router();
 const admin = require('./loginregister/index')
-const mylieidle = require('./mylieidle/index')
 const home = require('./home/index')
 const panning = require('./square/index')
 const release = require('./release/index')
@@ -30,9 +29,7 @@ router.post('/cleararray', release.Cleararray) // 清空照片数组
 router.post('/releasetopic', release.Releasetopic) // 发布话题
 
 // 我买的接口
-// router.get('/getAllbuy', transaction.getAllbuy)
-// 我卖的接口
-// router.get('/getAllbuy',)
+router.post('/getAllbuy', transaction.getAllbuy)
 // 关注接口
 router.post('/followbtn',userfans.followbtn)
 // 获取关注的人接口
