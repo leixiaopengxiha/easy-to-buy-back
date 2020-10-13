@@ -4,7 +4,9 @@ let {
 let {
     Topic
 } = require("../../db/release")
-
+let {
+    Historical
+} = require("../../db/historical")
 // 轮播接口
 exports.Swipers = (req, res) => {
     Swiper.find({}, (err, ress) => {
@@ -72,4 +74,82 @@ exports.Search = (req, res) => {
     }
 }
 
-//
+//添加历史记录
+
+exports.AddHistorical = (req, res) => {
+    let {
+        content,
+        username
+    } = req.body
+    console.log(content, username)
+    Historical.find({
+        username
+    }).then((doce) => {
+        if (doce.length === 0) {
+            addh()
+        } else {
+            if (doce[0].histori.length >= 10) {
+                let aa = JSON.parse(JSON.stringify(doce[0].histori))
+                aa.pop()
+                let histori = {
+                    histori: [content, ...aa]
+                }
+                Historical.updateMany({
+                    username
+                }, {
+                    $set: histori
+                }).then((docu) => {
+                    res.json({
+                        code: 200
+                    })
+                })
+            } else {
+                let histori = {
+                    histori: [content, ...doce[0].histori]
+                }
+                Historical.updateMany({
+                    username
+                }, {
+                    $set: histori
+                }).then((docu) => {
+                    res.json({
+                        code: 200
+                    })
+                })
+            }
+
+        }
+
+    })
+
+    function addh() {
+        var historical = new Historical({
+            username: username,
+            histori: [content]
+        })
+        historical.save(function (err) {
+            if (err) {
+                return console.log(err)
+            }
+            res.json({
+                code: 200
+            })
+        })
+    }
+}
+
+// 获取历史记录
+exports.ObHistorical = (req, res) => {
+    let {
+        username
+    } = req.body
+    Historical.find({
+        username
+    }).then((doc) => {
+        console.log(doc)
+        res.json({
+            code: 200,
+            data: doc
+        })
+    })
+}

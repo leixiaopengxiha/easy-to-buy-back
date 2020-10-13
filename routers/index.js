@@ -18,7 +18,10 @@ router.get('/', (req, res) => {
 router.post('/swiper', home.Swipers)
 // 首页搜索
 router.post('/search', home.Search)
-
+// 历史记录
+router.post('/addhistorical', home.AddHistorical)
+// 获取历史记录
+router.post('/obhistorical', home.ObHistorical)
 
 // 我的闲置接口
 // router.get('/mylieidle', mylieidle.getAll)
