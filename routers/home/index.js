@@ -146,7 +146,6 @@ exports.ObHistorical = (req, res) => {
     Historical.find({
         username
     }).then((doc) => {
-        console.log(doc)
         res.json({
             code: 200,
             data: doc
