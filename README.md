@@ -126,3 +126,40 @@
 输出状态
     200: 修改成功,
     501: 修改失败
+
+
+### 7. 添加历史记录
+* 接口名称: addhistorical
+* Url: http://132.232.89.22:8848/addhistorical
+* 请求协议: http
+* 请求方式: post
+* 请求参数: json格式
+```js
+{
+    "username": 用户账号,
+    "content": 搜索的内容
+}
+```
+输出参数
+    code: 状态码,
+    msg: 说明
+输出状态
+    200: 获取成功
+
+### 8. 获取历史记录
+* 接口名称: obhistorical
+* Url: http://132.232.89.22:8848/obhistorical
+* 请求协议: http
+* 请求方式: post
+* 请求参数: json格式
+```js
+{
+    "username": 用户账号,
+}
+```
+输出参数
+    code: 状态码,
+    msg: 说明
+输出状态
+    200: 获取成功
+
