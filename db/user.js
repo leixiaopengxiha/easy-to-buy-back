@@ -1,6 +1,8 @@
 //操作数据库的逻辑
 let mongoose = require('mongoose')
-let { db_url } = require('./config')
+let {
+  db_url
+} = require('./config')
 // connect里面的{ useNewUrlParser: true, useUnifiedTopology: true }必须加，否则不会报错但是有警告
 mongoose.connect(db_url, {
   useNewUrlParser: true,
@@ -16,9 +18,9 @@ let movieSchema = new mongoose.Schema({
   nickname: String,
   photourl: String,
   signature: String,
-  fans: Number,       // 粉丝数
-  follow: Number,     // 关注数
-  thumbs: Number      // 点赞数
+  fans: Number, // 粉丝数
+  follow: Number, // 关注数
+  thumbs: Number // 点赞数
 }, {
   collection: 'admin'
 })
@@ -26,9 +28,9 @@ let Admin = mongoose.model('admin', movieSchema)
 
 // 用户粉丝和关注详情
 let userfansSchema = new mongoose.Schema({
-  username: String,   // 用户账号
-  fans: Array,       // 用户的粉丝详情
-  follow: Array      // 用户的关注详情
+  username: String, // 用户账号
+  fans: Array, // 用户的粉丝详情
+  follow: Array // 用户的关注详情
 }, {
   collection: 'userfans'
 })

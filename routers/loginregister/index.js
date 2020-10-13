@@ -1,6 +1,11 @@
-let { Admin, Userfans } = require("../../db/user")
+let {
+    Admin,
+    Userfans
+} = require("../../db/user")
 let jwt = require("jsonwebtoken") // jwt 持久化登录
-const { json } = require("body-parser")
+const {
+    json
+} = require("body-parser")
 // const multer = require("multer") // 上传头像
 // 登录接口
 exports.Logins = (req, res) => {
@@ -62,7 +67,6 @@ exports.Register = (req, res) => {
         })
     }
     let myreg = /^1[3456789]\d{9}$/;
-    console.log()
     if (!myreg.test(username)) {
         return res.json({
             code: "202",
@@ -132,8 +136,11 @@ exports.Getadmin = (req, res) => {
                 }
                 if (ret) {
                     // 查询粉丝和关注数
-                    Userfans.findOne({ username }, (err, rett) => {
-                        console.log(rett)
+                    // console.log(decode.username)
+                    Userfans.findOne({
+                        username: decode.username
+                    }, (err, rett) => {
+                        // console.log(rett)
                         if (rett) {
                             res.json({
                                 code: 200,
@@ -167,4 +174,3 @@ exports.Getadmin = (req, res) => {
         }
     })
 }
-
