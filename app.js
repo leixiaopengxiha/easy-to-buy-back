@@ -7,6 +7,7 @@ const router = require("./routers/index");
 // let jwt = require("jsonwebtoken") // jwt 持久化登录
 // const multer = require("multer") // 上传头像
 let app = express()
+
 app.use(bodyParse.json())
 app.use(cors()) // 跨域中间件
 // app.use(history()); // 使用history中间件

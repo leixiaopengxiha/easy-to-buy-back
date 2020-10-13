@@ -13,7 +13,11 @@ router.get('/', (req, res) => {
         text: "欢迎进入8848"
     })
 })
+// 首页轮播
 router.post('/swiper', home.Swipers)
+// 首页搜索
+router.post('/search', home.Search)
+
 
 // 我的闲置接口
 // router.get('/mylieidle', mylieidle.getAll)
@@ -34,9 +38,9 @@ router.post('/releasetopic', release.Releasetopic) // 发布话题
 // 我卖的接口
 // router.get('/getAllbuy',)
 // 关注接口
-router.post('/followbtn',userfans.followbtn)
+router.post('/followbtn', userfans.followbtn)
 // 获取关注的人接口
-router.post('/allfollow',userfans.Allfollow)
+router.post('/allfollow', userfans.Allfollow)
 // 编辑资料接口
-router.post('/editprofile',userfans.Editprofile)
+router.post('/editprofile', userfans.Editprofile)
 module.exports = router
