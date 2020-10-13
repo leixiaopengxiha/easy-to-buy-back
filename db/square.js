@@ -5,7 +5,7 @@ let { db_url } = require('./config')
 mongoose.connect(db_url, { useNewUrlParser: true, useUnifiedTopology: true })
 
 // 广场 - 淘货（panning）
-let panningSchema = new mongoose.Schema({
+let squarePanningSchema = new mongoose.Schema({
   label: String, // 推荐
   title: String, // 卡通金属文具盒
   sort: String, // 图书文具
@@ -20,17 +20,13 @@ let panningSchema = new mongoose.Schema({
   thumbsArr: Array, // 点赞用户列表
   transaction: Number, // 交易状态 1：买 2：卖
   buystate: Number, // 已买商品的状态 1：未签收 2：已签收 3：未评价 4：已评价
-}, { collection: 'panning' })
-let Panning = mongoose.model('panning', panningSchema)
+}, { collection: 'squarepanning' })
+let SquarePanning = mongoose.model('squarepanning', squarePanningSchema)
 
 // 广场 - 话题（topic）
-// let squareTopicSchema = new mongoose.Schema({
-//   label: String,
-//   username: String,
-// })
-
+let squareTopicSchema = new mongoose.Schema({})
 
 // 将表暴露出去
 module.exports = {
-  Panning, // 广场 - 淘货
+  SquarePanning, // 广场 - 淘货
 }

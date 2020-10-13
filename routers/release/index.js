@@ -1,7 +1,8 @@
-// 发布集合
-let { Topic } = require('../../db/release')
-// 登录注册集合
-let { Admin } = require('../../db/user')
+// 发布闲置
+let { ReleaseAside } = require('../../db/release')
+// 发布话题
+let { ReleaseTopic } = require('../../db/release')
+
 const formidable = require("formidable");
 const path = require("path");
 const fs = require('fs')
@@ -15,9 +16,8 @@ exports.Uploadphoto = (req,res)=>{
     form.keepExtensions = true;// 保存扩展名
     form.parse(req, (err, fields, files) => {
         if (err) {throw err}
-        // console.log('fields',fields)
-        // console.log('files',files)
-		let img = "http://132.232.89.22:8848/img/upload/" + path.parse(files.file.path).base;
+		let img = "http://localhost:8848/img/upload/" + path.parse(files.file.path).base;
+		// let img = "http://132.232.89.22:8848/img/upload/" + path.parse(files.file.path).base;
 		dataList.push({url: img})
 		dataListImg.push({url:path.parse(files.file.path).base})
 		res.json(dataList)
@@ -39,27 +39,62 @@ exports.Cleararray = (req,res)=>{
 	}
 }
 
-// 发布
-exports.Releasetopic = (req,res) => {
-	const {username, inputVal, label} = req.body
+// 发布闲置
+exports.Releaseaside = (req,res) => {
+	const {username, inputVal, label, typeInputVal, explainInputVal} = req.body
 	const data = {
 	  imgurl: dataList,
 	  username: username,
 	  label: label,
-	  title: label, // 标题
+	  title: typeInputVal, // 标题
 	  price: inputVal, // 价格
-	  explain: '这个文具盒陪我很多年了，一直舍不得扔。忍痛卖出有要的联系我们', // 说明
+	  explain: explainInputVal, // 说明
 	  time: new Date().getTime(), // 发布时间
 	  fans: 0, // 粉丝
 	  see: 0, // 查看
 	  thumbs: 0, // 点赞
 	  comment: 0, // 评论总数
 	};
-	Topic.insertMany([data]).then(docs=>{
-		console.log(docs)
-		res.json({
-			code: 200,
-			msg: '提交成功'
-		})
+	ReleaseAside.insertMany([data]).then(docs=>{
+		if(docs.length == 0){
+			res.json({
+				code: 201,
+				msg: '提交失败'
+			})
+		}else{
+			res.json({
+				code: 200,
+				msg: '提交成功'
+			})
+		}
+	})
+}
+
+// 发布话题
+exports.Releasetopic = (req,res) => {
+	const {explain, username} = req.body
+	const data = {
+		explain: explain, // 说明
+		imgurl: dataList, // 图片路径
+		username: username, // 获取用户账号
+		time: new Date().getTime(), // 发布时间
+		see: 0, // 查看
+		thumbs: 0, // 点赞
+		thumbsArr: [], // 点赞用户列表
+		comment: 0, // 评论总数
+		commentArr: [], // 评论数组
+	};
+	ReleaseTopic.insertMany([data]).then(docs=>{
+		if(docs.length == 0){
+			res.json({
+				code: 201,
+				msg: '发布失败'
+			})
+		}else{
+			res.json({
+				code: 200,
+				msg: '发布成功'
+			})
+		}
 	})
 }
