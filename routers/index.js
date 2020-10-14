@@ -36,13 +36,11 @@
 const express = require('express');
 let router = express.Router();
 const admin = require('./loginregister/index')
-const transaction = require('./transaction/index')
 const home = require('./home/index')
 const square = require('./square/index')
 const release = require('./release/index')
-
-// 粉丝关注
 const userfans = require('./userfans/index')
+const transaction = require('./transaction/index')
 router.get('/', (req, res) => {
     res.json({
         code: '200',
