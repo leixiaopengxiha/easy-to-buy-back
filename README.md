@@ -157,12 +157,24 @@ msg: 说明
 - 请求协议: http
 - 请求方式: post
 
+```js
+{
+    "username": 用户账号
+}
+```
+
 ### 8. 清空照片数组
 
 - 接口名称: cleararray
 - Url: http://132.232.89.22:8848/cleararray
 - 请求协议: http
 - 请求方式: post
+
+```js
+{
+    "username": 用户账号
+}
+```
 
 ### 9. 发布闲置
 
@@ -297,42 +309,69 @@ data: 内容
 code: 状态码,
 data: 内容
 输出状态
+200: 请求成功
+501: 服务器错误
+
+### 15. 广场 - 淘货详情
+
+- 接口名称: squarepanningdetails
+- Url: http://132.232.89.22:8848/squarepanningdetails
+- 请求协议: http
+- 请求方式: post
+- 请求参数: json 格式
+
+```js
+{
+    "id": 数据库自动生成的id
+}
+```
+
+输出参数
+code: 状态码,
+msg: 说明
+输出状态
+200: 成功获取详情
+201: 没有取到任何信息
 200: 修改成功,
 501: 修改失败
 
+### 16. 添加历史记录
 
-### 15. 添加历史记录
-* 接口名称: addhistorical
-* Url: http://132.232.89.22:8848/addhistorical
-* 请求协议: http
-* 请求方式: post
-* 请求参数: json格式
+- 接口名称: addhistorical
+- Url: http://132.232.89.22:8848/addhistorical
+- 请求协议: http
+- 请求方式: post
+- 请求参数: json 格式
+
 ```js
 {
     "username": 用户账号,
     "content": 搜索的内容
 }
 ```
-输出参数
-    code: 状态码,
-    msg: 说明
-输出状态
-    200: 获取成功
 
-### 16. 获取历史记录
-* 接口名称: obhistorical
-* Url: http://132.232.89.22:8848/obhistorical
-* 请求协议: http
-* 请求方式: post
-* 请求参数: json格式
+输出参数
+code: 状态码,
+msg: 说明
+输出状态
+200: 获取成功
+
+### 17. 获取历史记录
+
+- 接口名称: obhistorical
+- Url: http://132.232.89.22:8848/obhistorical
+- 请求协议: http
+- 请求方式: post
+- 请求参数: json 格式
+
 ```js
 {
     "username": 用户账号,
 }
 ```
-输出参数
-    code: 状态码,
-    msg: 说明
-输出状态
-    200: 获取成功
 
+输出参数
+code: 状态码,
+msg: 说明
+输出状态
+200: 获取成功
