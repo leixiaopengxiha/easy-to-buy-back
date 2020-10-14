@@ -136,11 +136,8 @@ exports.Getadmin = (req, res) => {
                 }
                 if (ret) {
                     // 查询粉丝和关注数
-                    // console.log(decode.username)
-                    Userfans.findOne({
-                        username: decode.username
-                    }, (err, rett) => {
-                        // console.log(rett)
+                    Userfans.findOne({ username:decode.username }, (err, rett) => {
+                        console.log(rett)
                         if (rett) {
                             res.json({
                                 code: 200,

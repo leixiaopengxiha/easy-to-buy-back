@@ -4,9 +4,8 @@ const admin = require('./loginregister/index')
 const home = require('./home/index')
 const square = require('./square/index')
 const release = require('./release/index')
-
-// 粉丝关注
 const userfans = require('./userfans/index')
+const transaction = require('./transaction/index')
 router.get('/', (req, res) => {
     res.json({
         code: '200',
@@ -17,7 +16,10 @@ router.get('/', (req, res) => {
 router.post('/swiper', home.Swipers)
 // 首页搜索
 router.post('/search', home.Search)
-
+// 历史记录
+router.post('/addhistorical', home.AddHistorical)
+// 获取历史记录
+router.post('/obhistorical', home.ObHistorical)
 
 // 我的闲置接口
 // router.get('/mylieidle', mylieidle.getAll)
@@ -35,9 +37,7 @@ router.post('/releaseaside', release.Releaseaside) // 发布闲置
 router.post('/releasetopic', release.Releasetopic) // 发布话题
 
 // 我买的接口
-// router.get('/getAllbuy', transaction.getAllbuy)
-// 我卖的接口
-// router.get('/getAllbuy',)
+router.post('/getAllbuy', transaction.GetAllbuy)
 // 关注接口
 router.post('/followbtn', userfans.followbtn)
 // 获取关注的人接口
