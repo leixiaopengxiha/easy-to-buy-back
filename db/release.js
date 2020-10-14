@@ -8,6 +8,7 @@ mongoose.connect(db_url, { useNewUrlParser: true, useUnifiedTopology: true })
 let releaseAsideSchema = new mongoose.Schema({
     label: String, // 标签
     title: String, // 标题
+    sort: String, // 分类
     price: String, // 价格
     explain: String, // 说明
     imgurl: Array, // 图片路径

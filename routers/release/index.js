@@ -57,14 +57,16 @@ exports.Releaseaside = (req,res) => {
 	  imgurl: dataList[username],
 	  username: username,
 	  label: label,
+	  sort: label,
 	  title: typeInputVal, // 标题
 	  price: inputVal, // 价格
 	  explain: explainInputVal, // 说明
 	  time: new Date().getTime(), // 发布时间
-	  fans: 0, // 粉丝
 	  see: 0, // 查看
 	  thumbs: 0, // 点赞
+	  thumbsArr: [], // 点赞用户列表
 	  comment: 0, // 评论总数
+	  commentArr: [], // 评论数组
 	};
 	ReleaseAside.insertMany([data]).then(docs=>{
 		if(docs.length == 0){
@@ -89,6 +91,7 @@ exports.Releaseaside = (req,res) => {
 exports.Releasetopic = (req,res) => {
 	const {explain, username} = req.body
 	const data = {
+		// label
 		explain: explain, // 说明
 		imgurl: dataList[username], // 图片路径
 		username: username, // 获取用户账号

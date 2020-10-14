@@ -28,7 +28,7 @@ router.post('/register', admin.Register) // 注册
 router.post('/login', admin.Logins) // 登录
 router.post('/getadmin', admin.Getadmin) // 获取当前登录用户信息
 router.post('/squaregetpanning', square.SquareAllpanning) // 获取所有淘货
-router.post('/squarepanningdetails', square.SquarePanningDetails) // 更新点赞次数
+router.post('/squarepanningdetails', square.SquarePanningDetails) // 淘货详情
 // router.post('/getsquaretopic', square.Allsquaretopic) // 获取所有话题
 router.post('/squarethumbscount', square.SquareThumbscount) // 更新点赞次数
 router.post('/uploadphoto', release.Uploadphoto) // 上传照片
