@@ -34,8 +34,8 @@ let releaseTopicSchema = new mongoose.Schema({
     thumbsArr: Array, // 点赞用户列表
     comment: Number, // 评论总数
     commentArr: Array, // 评论数组
-}, { collection: 'releaseTopic' })
-let ReleaseTopic = mongoose.model('releaseTopic', releaseTopicSchema)
+}, { collection: 'releasetopic' })
+let ReleaseTopic = mongoose.model('releasetopic', releaseTopicSchema)
 
 // 将表暴露出去
 module.exports = {
