@@ -335,4 +335,20 @@ data: 内容
     msg: 说明
 输出状态
     200: 获取成功
+### 17. 清空历史记录
 
+* 接口名称: rehistorical
+* Url: http://132.232.89.22:8848/rehistorical
+* 请求协议: http
+* 请求方式: post
+* 请求参数: json格式
+```js
+{
+    "username": 用户账号,
+}
+```
+输出参数
+    code: 状态码,
+    data: 说明
+输出状态
+    200: 获取成功

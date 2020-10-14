@@ -152,3 +152,18 @@ exports.ObHistorical = (req, res) => {
         })
     })
 }
+
+// 清空历史记录
+exports.ReHistorical = (req, res) => {
+    let {
+        username
+    } = req.body
+    Historical.remove({
+        username
+    }).then(docs => {
+        res.json({
+            code: 200,
+            data: '清楚成功'
+        })
+    })
+}
