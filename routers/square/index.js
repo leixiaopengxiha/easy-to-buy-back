@@ -7,29 +7,11 @@ let {
 } = require('../../db/user')
 
 // 获取所有淘货数据
-<<<<<<< HEAD
 exports.SquareAllpanning = (req,res) => {
     const { label } = req.body
     console.log(label)
     ReleaseAside.find({ label }).then(docs=>{
         if(docs.length == 0){
-=======
-exports.SquareAllpanning = (req, res) => {
-    const {
-        label
-    } = req.body
-
-    let labels = {}
-    if (label) {
-        labels = {
-            label
-        }
-    }
-    ReleaseAside.find(labels).sort({
-        time: -1
-    }).then(docs => {
-        if (docs.length == 0) {
->>>>>>> da01a14a4736740a429c245d327bafa77551f90a
             res.json({
                 code: 201,
                 msg: "没有取到任何信息",
