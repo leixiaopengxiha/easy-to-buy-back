@@ -24,7 +24,7 @@ let squarePanningSchema = new mongoose.Schema({
 let SquarePanning = mongoose.model('squarepanning', squarePanningSchema)
 
 // 广场 - 话题（topic）
-let squareTopicSchema = new mongoose.Schema({})
+// let squareTopicSchema = new mongoose.Schema({})
 
 // 将表暴露出去
 module.exports = {

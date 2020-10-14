@@ -157,12 +157,24 @@ msg: 说明
 - 请求协议: http
 - 请求方式: post
 
+```js
+{
+    "username": 用户账号
+}
+```
+
 ### 8. 清空照片数组
 
 - 接口名称: cleararray
 - Url: http://132.232.89.22:8848/cleararray
 - 请求协议: http
 - 请求方式: post
+
+```js
+{
+    "username": 用户账号
+}
+```
 
 ### 9. 发布闲置
 
@@ -299,3 +311,24 @@ data: 内容
 输出状态
 200: 请求成功
 501: 服务器错误
+
+### 15. 广场 - 淘货详情
+
+- 接口名称: squarepanningdetails
+- Url: http://132.232.89.22:8848/squarepanningdetails
+- 请求协议: http
+- 请求方式: post
+- 请求参数: json 格式
+
+```js
+{
+    "id": 数据库自动生成的id
+}
+```
+
+输出参数
+code: 状态码,
+msg: 说明
+输出状态
+200: 成功获取详情
+201: 没有取到任何信息
