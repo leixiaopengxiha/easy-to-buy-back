@@ -1,14 +1,10 @@
-// 淘货集合
-let { SquarePanning } = require('../../db/square')
-// 登录注册集合
+let { ReleaseAside, ReleaseTopic } = require('../../db/release')
 let { Admin } = require('../../db/user')
-// 话题集合
-// let {} = require('../../db/square')
 
 // 获取所有淘货数据
 exports.SquareAllpanning = (req,res) => {
     const { label } = req.body
-    SquarePanning.find({ label }).then(docs=>{
+    ReleaseAside.find({ label }).then(docs=>{
         if(docs.length == 0){
             res.json({
                 code: 201,
@@ -26,7 +22,7 @@ exports.SquareAllpanning = (req,res) => {
                         })
                     }else{
                         let {nickname,photourl,fans,follow} = docss[0]
-                        let obj = {...docs[i]._doc, nickname, photourl,fans,follow}
+                        let obj = {...docs[i]._doc, nickname, photourl, fans, follow}
                         data.push(obj)
                         if(i === docs.length - 1){
                             res.json({
@@ -45,7 +41,7 @@ exports.SquareAllpanning = (req,res) => {
 // 广场淘货详情
 exports.SquarePanningDetails = (req,res)=>{
     const { id } = req.body
-    SquarePanning.findOne({_id: id}).then(docs => {
+    ReleaseAside.findOne({_id: id}).then(docs => {
         if(docs){
             res.json({
                 code: 200,
@@ -64,12 +60,12 @@ exports.SquarePanningDetails = (req,res)=>{
 // 更新点赞次数
 exports.SquareThumbscount = (req,res) => {
     const {id,username} = req.body
-    SquarePanning.findOne({ _id: id }).then(docs=>{
+    ReleaseAside.findOne({ _id: id }).then(docs=>{
         if(docs){
             const flag = docs.thumbsArr.includes(username)
             if(!flag){
                 const data = {thumbsArr: [...docs.thumbsArr,username],thumbs: docs.thumbsArr.length+1}
-                SquarePanning.updateMany({_id: id},{$set: data}).then(docss=>{
+                ReleaseAside.updateMany({_id: id},{$set: data}).then(docss=>{
                     if(docss.ok == 1){
                         res.json({
                             code: 200,
