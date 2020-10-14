@@ -20,7 +20,10 @@ router.post('/search', home.Search)
 router.post('/addhistorical', home.AddHistorical)
 // 获取历史记录
 router.post('/obhistorical', home.ObHistorical)
-
+// 清空历史记录
+router.post('/rehistorical', home.ReHistorical)
+// 获取分类接口
+router.post('/getIfication', home.GetIfication)
 // 我的闲置接口
 // router.get('/mylieidle', mylieidle.getAll)
 
