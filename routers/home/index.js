@@ -178,13 +178,11 @@ exports.GetIfication = (req, res) => {
     } = req.body
     let aa = {}
     if (label) {
-        console.log(label)
         aa = {
             label
         }
     }
     ReleaseAside.find(aa).then(docs => {
-        console.log(docs)
         res.json({
             code: 200,
             data: docs
