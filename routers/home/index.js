@@ -61,7 +61,7 @@ exports.Search = (req, res) => {
                 res.json({
                     code: 200,
                     data: {
-                        text: '暂无次数据'
+                        text: '暂无此数据'
                     }
                 })
             } else {

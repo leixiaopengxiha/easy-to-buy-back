@@ -4,6 +4,7 @@ let { Admin } = require('../../db/user')
 // 获取所有淘货数据
 exports.SquareAllpanning = (req,res) => {
     const { label } = req.body
+    console.log(label)
     ReleaseAside.find({ label }).then(docs=>{
         if(docs.length == 0){
             res.json({
