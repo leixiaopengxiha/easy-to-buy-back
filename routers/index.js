@@ -71,7 +71,7 @@ router.post('/releaseaside', release.Releaseaside) // 发布闲置
 router.post('/releasetopic', release.Releasetopic) // 发布话题
 
 // 我买的接口
-router.post('/getAllbuy', transaction.GetAllbuy)
+router.post('/getallbuy', transaction.GetAllbuy)
 // 关注接口
 router.post('/followbtn', userfans.Followbtn)
 // 获取关注的人接口

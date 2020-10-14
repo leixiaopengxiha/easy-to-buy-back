@@ -16,8 +16,8 @@ exports.Uploadphoto = (req,res)=>{
     form.keepExtensions = true;// 保存扩展名
     form.parse(req, (err, fields, files) => {
         if (err) {throw err}
-		let img = "http://localhost:8848/img/upload/" + path.parse(files.file.path).base;
-		// let img = "http://132.232.89.22:8848/img/upload/" + path.parse(files.file.path).base;
+		// let img = "http://localhost:8848/img/upload/" + path.parse(files.file.path).base;
+		let img = "http://132.232.89.22:8848/img/upload/" + path.parse(files.file.path).base;
 		dataList.push({url: img})
 		dataListImg.push({url:path.parse(files.file.path).base})
 		res.json(dataList)
