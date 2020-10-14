@@ -25,8 +25,8 @@ exports.SquareAllpanning = (req,res) => {
                             msg: "没有该用户"
                         })
                     }else{
-                        let {nickname,photourl} = docss[0]
-                        let obj = {...docs[i]._doc, nickname, photourl}
+                        let {nickname,photourl,fans,follow} = docss[0]
+                        let obj = {...docs[i]._doc, nickname, photourl,fans,follow}
                         data.push(obj)
                         if(i === docs.length - 1){
                             res.json({
