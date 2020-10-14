@@ -2,7 +2,7 @@ let {
     Swiper
 } = require("../../db/home")
 let {
-    Topic
+    ReleaseAside
 } = require("../../db/release")
 let {
     Historical
@@ -33,14 +33,14 @@ exports.Search = (req, res) => {
     let {
         content
     } = req.body
-
+    console.log(content)
     let label = JSON.parse(JSON.stringify({
         $regex: content
     }));
     let title = JSON.parse(JSON.stringify({
         $regex: content
     }));
-    Topic.find({
+    ReleaseAside.find({
         label
     }).then(docs => {
         if (docs.length == 0) {
@@ -54,7 +54,7 @@ exports.Search = (req, res) => {
     })
 
     function titles() {
-        Topic.find({
+        ReleaseAside.find({
             title
         }).then(docs => {
             if (docs.length == 0) {
