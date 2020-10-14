@@ -81,6 +81,11 @@ exports.Followbtn = (req, res) => {
 					msg: "你已经关注过了"
 				})
 			}
+		}else{
+			res.json({
+				code: "400",
+				msg: "没有该用户"
+			})
 		}
 	})
 	// 关注的人
