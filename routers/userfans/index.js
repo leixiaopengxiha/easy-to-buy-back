@@ -3,7 +3,7 @@ const {
 	Userfans, Admin
 } = require('../../db/user')
 // 点击关注按钮的接口
-exports.followbtn = (req, res) => {
+exports.Followbtn = (req, res) => {
 	const {
 		username,
 		tousername

@@ -9,7 +9,7 @@ mongoose.connect(db_url, {
 // 我买的和我卖的表
 let transacSchema = new mongoose.Schema({
     imgurl: Array,      // 图片路径
-    title: String,      // 标题
+    nickname: String,   // 卖家
     explain: String,    // 产品描述
     sort: String,       // 产品类型
     username: String,   // 用户账号

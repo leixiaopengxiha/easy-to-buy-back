@@ -152,3 +152,42 @@ exports.ObHistorical = (req, res) => {
         })
     })
 }
+
+// 清空历史记录
+exports.ReHistorical = (req, res) => {
+    let {
+        username
+    } = req.body
+    Historical.remove({
+        username
+    }).then(docs => {
+        res.json({
+            code: 200,
+            data: '清楚成功'
+        })
+    })
+}
+
+
+
+
+// 获取全分类
+exports.GetIfication = (req, res) => {
+    let {
+        label
+    } = req.body
+    let aa = {}
+    if (label) {
+        console.log(label)
+        aa = {
+            label
+        }
+    }
+    ReleaseAside.find(aa).then(docs => {
+        console.log(docs)
+        res.json({
+            code: 200,
+            data: docs
+        })
+    })
+}
