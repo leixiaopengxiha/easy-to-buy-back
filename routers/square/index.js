@@ -42,6 +42,25 @@ exports.SquareAllpanning = (req,res) => {
     })
 }
 
+// 广场淘货详情
+exports.SquarePanningDetails = (req,res)=>{
+    const { id } = req.body
+    SquarePanning.findOne({_id: id}).then(docs => {
+        if(docs){
+            res.json({
+                code: 200,
+                msg: '成功获取详情',
+                data: docs
+            })
+        }else{
+            res.json({
+                code: 201,
+                msg: '没有取到任何信息'
+            })
+        }
+    })
+}
+
 // 更新点赞次数
 exports.SquareThumbscount = (req,res) => {
     const {id,username} = req.body
