@@ -4,7 +4,11 @@ let { Admin } = require('../../db/user')
 // 获取所有淘货数据
 exports.SquareAllpanning = (req,res) => {
     const { label } = req.body
-    ReleaseAside.find({ label }).then(docs=>{
+    let labels = {}
+    if (label) { 
+        labels = { label }
+    }
+    ReleaseAside.find(labels).sort({time: -1}).then(docs => {
         if(docs.length == 0){
             res.json({
                 code: 201,
@@ -43,10 +47,21 @@ exports.SquarePanningDetails = (req,res)=>{
     const { id } = req.body
     ReleaseAside.findOne({_id: id}).then(docs => {
         if(docs){
-            res.json({
-                code: 200,
-                msg: '成功获取详情',
-                data: docs
+            Admin.find({username: docs.username}).then(docss => {
+                if(docss.length == 0){
+                    res.json({
+                        code: 204,
+                        msg: "没有该用户"
+                    })
+                }else{
+                    let {nickname, photourl, fans, follow} = docss[0]
+                    let obj = {...docs._doc, nickname, photourl, fans, follow}
+                    res.json({
+                        code: 200,
+                        msg: '成功获取详情',
+                        data: obj
+                    })
+                }
             })
         }else{
             res.json({

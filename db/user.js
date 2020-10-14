@@ -18,8 +18,8 @@ let movieSchema = new mongoose.Schema({
   nickname: String,
   photourl: String,
   signature: String,
-  fans: Number, // 粉丝数
-  follow: Number, // 关注数
+  fans: Array, // 粉丝数
+  follow: Array, // 关注数
   thumbs: Number // 点赞数
 }, {
   collection: 'admin'
