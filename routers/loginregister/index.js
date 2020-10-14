@@ -1,6 +1,5 @@
 let {
-    Admin,
-    Userfans
+    Admin
 } = require("../../db/user")
 let jwt = require("jsonwebtoken") // jwt 持久化登录
 const {
@@ -92,8 +91,8 @@ exports.Register = (req, res) => {
             nickname: username,
             photourl: "https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif",
             signature: '你咋不上天呢？',
-            fans: 0,
-            follow: 0,
+            fans: [],
+            follow: [],
             thumbs: 0
         })
         user.save(function (err, ress) {
@@ -105,13 +104,6 @@ exports.Register = (req, res) => {
                 message: '注册成功',
             })
         })
-        // 在 userfans 表中添加该用户的信息
-        let userfans = new Userfans({
-            username,
-            fans: [],
-            follow: [],
-        })
-        userfans.save()
     })
 }
 //获取当前登录用户信息
@@ -135,28 +127,22 @@ exports.Getadmin = (req, res) => {
                     return console.log("查询失败!")
                 }
                 if (ret) {
-                    // 查询粉丝和关注数
-                    Userfans.findOne({ username:decode.username }, (err, rett) => {
-                        console.log(rett)
-                        if (rett) {
-                            res.json({
-                                code: 200,
-                                data: {
-                                    nickname: ret.nickname,
-                                    photourl: ret.photourl,
-                                    username: ret.username,
-                                    signature: ret.signature,
-                                    fans: rett.fans.length,
-                                    follow: rett.follow.length,
-                                    thumbs: ret.thumbs,
-                                    id: ret._id,
-                                    token: jwt.sign({
-                                        username: ret.username
-                                    }, "abcd", {
-                                        // 过期时间
-                                        expiresIn: "1h"
-                                    })
-                                }
+                    res.json({
+                        code: 200,
+                        data: {
+                            nickname: ret.nickname,
+                            photourl: ret.photourl,
+                            username: ret.username,
+                            signature: ret.signature,
+                            fans: ret.fans.length,
+                            follow: ret.follow.length,
+                            thumbs: ret.thumbs,
+                            id: ret._id,
+                            token: jwt.sign({
+                                username: ret.username
+                            }, "abcd", {
+                                // 过期时间
+                                expiresIn: "1h"
                             })
                         }
                     })

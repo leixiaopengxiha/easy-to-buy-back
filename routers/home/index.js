@@ -61,7 +61,7 @@ exports.Search = (req, res) => {
                 res.json({
                     code: 200,
                     data: {
-                        text: '暂无次数据'
+                        text: '暂无此数据'
                     }
                 })
             } else {
@@ -178,13 +178,11 @@ exports.GetIfication = (req, res) => {
     } = req.body
     let aa = {}
     if (label) {
-        console.log(label)
         aa = {
             label
         }
     }
     ReleaseAside.find(aa).then(docs => {
-        console.log(docs)
         res.json({
             code: 200,
             data: docs

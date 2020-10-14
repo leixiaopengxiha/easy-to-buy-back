@@ -1,7 +1,5 @@
 // 用户的粉丝详情和关注详情
-const {
-	Userfans, Admin
-} = require('../../db/user')
+const { Admin } = require('../../db/user')
 // 点击关注按钮的接口
 exports.Followbtn = (req, res) => {
 	const {
@@ -11,22 +9,32 @@ exports.Followbtn = (req, res) => {
 	// username: 点击关注的那个人
 	// tousername: 被关注的那个人
 	// 关注接口
-	Userfans.findOne({
+	Admin.findOne({
 		username: tousername
 	}).then(doc => {
 		if (doc) {
-			let flagfans = doc.fans.includes(username)
-			// let flagfollow = doc.follow.includes(tousername)
-			if (!flagfans) {
+			// let flagfans = doc.fans.includes(username)
+			// 判断受否关注过此人
+			function findElem(arrayToSearch, attr, val) {
+				for (var i = 0; i < arrayToSearch.length; i++) {
+					if (arrayToSearch[i][attr] == val) {
+						return i;
+					}
+				}
+				return -1;
+			}
+			// console.log(findElem(doc.fans, 'username', username))
+			if (findElem(doc.fans, 'username', username) == -1) {
 				Admin.findOne({ username: tousername }).then(tundoc => {
 					if (tundoc) {
-						let data = {};
-						data.fans = tundoc.fans;
-						data.nickname = tundoc.nickname;
-						data.photourl = tundoc.photourl;
-						data.signature = tundoc.signature;
-						data.username = tundoc.username;
-						Userfans.updateOne({
+						let data = {
+							nickname: tundoc.nickname,
+							fans: tundoc.fans.length,
+							photourl: tundoc.photourl,
+							signature: tundoc.signature,
+							username: tundoc.username
+						}
+						Admin.updateOne({
 							username: username
 						}, {
 							$set: {
@@ -35,17 +43,18 @@ exports.Followbtn = (req, res) => {
 						}).then(docs => {
 							if (docs) {
 								Admin.findOne({ username: username }).then(undoc => {
-									let todata = {};
-									todata.fans = undoc.fans;
-									todata.nickname = undoc.nickname;
-									todata.photourl = undoc.photourl;
-									todata.signature = undoc.signature;
-									todata.username = undoc.username;
-									Userfans.updateOne({
+									let data = {
+										nickname: undoc.nickname,
+										fans: undoc.fans.length,
+										photourl: undoc.photourl,
+										signature: undoc.signature,
+										username: undoc.username
+									}
+									Admin.updateOne({
 										username: tousername
 									}, {
 										$set: {
-											fans: [...doc.fans, todata]
+											fans: [...doc.fans, data]
 										}
 									}).then(docss => {
 										if (docss) {
@@ -81,18 +90,20 @@ exports.Followbtn = (req, res) => {
 					msg: "你已经关注过了"
 				})
 			}
+		} else {
+			res.json({
+				code: "400",
+				msg: "没有该用户"
+			})
 		}
 	})
-	// 关注的人
 }
 // 获取关注的人和粉丝接口
 exports.Allfollow = (req, res) => {
 	const {
 		username
 	} = req.body
-	Userfans.findOne({
-		username: username
-	}).then(doc => {
+	Admin.findOne({ username }).then(doc => {
 		if (doc) {
 			res.json({
 				code: '200',
