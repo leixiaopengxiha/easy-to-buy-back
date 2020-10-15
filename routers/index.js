@@ -57,18 +57,17 @@ router.post('/addhistorical', home.AddHistorical)
 router.post('/obhistorical', home.ObHistorical)
 // 清空历史记录
 router.post('/rehistorical', home.ReHistorical)
-// 获取分类接口
-router.post('/getIfication', home.GetIfication)
+
 // 我的闲置接口
 // router.get('/mylieidle', mylieidle.getAll)
 
 router.post('/register', admin.Register) // 注册
 router.post('/login', admin.Logins) // 登录
 router.post('/getadmin', admin.Getadmin) // 获取当前登录用户信息
-router.post('/squaregetpanning', square.SquareAllpanning) // 获取所有淘货
+router.post('/squaregetpanning', square.SquareAllpanning) // 获取淘货
 router.post('/squarepanningdetails', square.SquarePanningDetails) // 淘货详情
-// router.post('/getsquaretopic', square.Allsquaretopic) // 获取所有话题
-router.post('/squarethumbscount', square.SquareThumbscount) // 更新点赞次数
+router.post('/squaregettopic', square.SquareAlltopic) // 获取话题
+router.post('/squarethumbscount', square.SquareThumbscount) // 更新淘货点赞次数
 router.post('/uploadphoto', release.Uploadphoto) // 上传照片
 router.post('/cleararray', release.Cleararray) // 清空照片数组
 router.post('/releaseaside', release.Releaseaside) // 发布闲置

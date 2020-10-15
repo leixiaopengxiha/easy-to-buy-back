@@ -33,7 +33,6 @@ exports.Search = (req, res) => {
     let {
         content
     } = req.body
-    console.log(content)
     let label = JSON.parse(JSON.stringify({
         $regex: content
     }));
@@ -164,28 +163,6 @@ exports.ReHistorical = (req, res) => {
         res.json({
             code: 200,
             data: '清楚成功'
-        })
-    })
-}
-
-
-
-
-// 获取全分类
-exports.GetIfication = (req, res) => {
-    let {
-        label
-    } = req.body
-    let aa = {}
-    if (label) {
-        aa = {
-            label
-        }
-    }
-    ReleaseAside.find(aa).then(docs => {
-        res.json({
-            code: 200,
-            data: docs
         })
     })
 }
