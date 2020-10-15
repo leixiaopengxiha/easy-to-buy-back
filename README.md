@@ -85,8 +85,7 @@ message: 说明信息
 201: 登录时间已过期，请重新登录!
 202: 用户信息获取失败
 ```
-
-### 4. 获取粉丝和关注接口
+### 4. 获取关注的人接口
 
 - 接口名称: allfollow
 - Url: http://132.232.89.22:8848/allfollow
@@ -104,9 +103,29 @@ message: 说明信息
 输出参数:
 code: 状态码,
 mag: 说明,
-fans: 粉丝的 username,
-follow: 关注者的 username,
-username: 当前用户的 usernmae
+data: 数据
+输出状态码:
+200: 获取成功
+500: 获取失败
+```
+### 4. 获取关注的人接口
+
+- 接口名称: allfans
+- Url: http://132.232.89.22:8848/allfans
+- 请求协议: http
+- 请求方式: post
+- 请求参数: json 格式
+
+```js
+{
+    "username": 用户账号
+}
+```
+```
+输出参数:
+code: 状态码,
+mag: 说明,
+data: 数据
 输出状态码:
 200: 获取成功
 500: 获取失败

@@ -79,6 +79,8 @@ router.post('/getallbuy', transaction.GetAllbuy)
 router.post('/followbtn', userfans.Followbtn)
 // 获取关注的人接口
 router.post('/allfollow', userfans.Allfollow)
+// 获取粉丝接口
+router.post('/allfans', userfans.Allfans)
 // 编辑资料接口
 router.post('/editprofile', userfans.Editprofile)
 module.exports = router
