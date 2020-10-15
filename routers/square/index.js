@@ -14,11 +14,11 @@ exports.SquareAlltopic = (req,res)=>{
         flags = { flag }
     }
     if(flags.flag == '最热'){
-        ReleaseTopic.find().sort({see: -1}).limit(10).then(docs => {
+        ReleaseTopic.find().sort({see: -1}).limit(3).then(docs => {
             getData(docs, res)
         })
     }else{
-        ReleaseTopic.find(flags).sort({time: -1}).skip((page) * 3).limit(10).then(docs => {
+        ReleaseTopic.find(flags).sort({time: -1}).skip(page * 3).limit(10).then(docs => {
             getData(docs, res)
         })
     }
@@ -31,7 +31,7 @@ exports.SquareAllpanning = (req,res) => {
     if(label){ 
         labels = { label }
     }
-    ReleaseAside.find(labels).sort({time: -1}).skip((page) * 3).limit(3).then(docs => {
+    ReleaseAside.find(labels).sort({time: -1}).skip(page * 3).limit(10).then(docs => {
         getData(docs, res)
     })
 }
