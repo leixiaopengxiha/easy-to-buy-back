@@ -13,69 +13,37 @@ exports.Followbtn = (req, res) => {
 		username: tousername
 	}).then(doc => {
 		if (doc) {
-			// let flagfans = doc.fans.includes(username)
 			// 判断受否关注过此人
-			function findElem(arrayToSearch, attr, val) {
-				for (var i = 0; i < arrayToSearch.length; i++) {
-					if (arrayToSearch[i][attr] == val) {
-						return i;
+			let flagfans = doc.fans.includes(username)
+			if (!flagfans) {
+				Admin.updateOne({
+					username: tousername
+				}, {
+					$set: {
+						fans: [...doc.fans, username]
 					}
-				}
-				return -1;
-			}
-			// console.log(findElem(doc.fans, 'username', username))
-			if (findElem(doc.fans, 'username', username) == -1) {
-				Admin.findOne({ username: tousername }).then(tundoc => {
-					if (tundoc) {
-						let data = {
-							nickname: tundoc.nickname,
-							fans: tundoc.fans.length,
-							photourl: tundoc.photourl,
-							signature: tundoc.signature,
-							username: tundoc.username
-						}
-						Admin.updateOne({
-							username: username
-						}, {
-							$set: {
-								follow: [...doc.follow, data]
-							}
-						}).then(docs => {
-							if (docs) {
-								Admin.findOne({ username: username }).then(undoc => {
-									let data = {
-										nickname: undoc.nickname,
-										fans: undoc.fans.length,
-										photourl: undoc.photourl,
-										signature: undoc.signature,
-										username: undoc.username
-									}
-									Admin.updateOne({
-										username: tousername
-									}, {
-										$set: {
-											fans: [...doc.fans, data]
-										}
-									}).then(docss => {
-										if (docss) {
-											res.json({
-												code: "200",
-												msg: "关注成功"
-											})
-										} else {
-											res.json({
-												code: "501",
-												msg: "关注失败"
-											})
-										}
+				}).then(docs => {
+					if (docs) {
+						Admin.findOne({ username: username }).then(undoc => {
+							Admin.updateOne({
+								username: username
+							}, {
+								$set: {
+									follow: [...undoc.follow, tousername]
+								}
+							}).then(docss => {
+								if (docss) {
+									res.json({
+										code: "200",
+										msg: "关注成功"
 									})
-								})
-							} else {
-								res.json({
-									code: "501",
-									msg: "关注失败"
-								})
-							}
+								} else {
+									res.json({
+										code: "501",
+										msg: "关注失败"
+									})
+								}
+							})
 						})
 					} else {
 						res.json({
@@ -84,6 +52,7 @@ exports.Followbtn = (req, res) => {
 						})
 					}
 				})
+
 			} else {
 				res.json({
 					code: "400",
@@ -98,26 +67,98 @@ exports.Followbtn = (req, res) => {
 		}
 	})
 }
-// 获取关注的人和粉丝接口
+// 获取粉丝接口
+exports.Allfans = (req, res) => {
+	const {
+		username
+	} = req.body
+	Admin.findOne({ username }).then(doc => {
+		if (doc.fans.length == 0) {
+			return res.json({
+				code: 204,
+				msg: "该用户没有粉丝"
+			})
+		}
+		let data = []
+		for (let i = 0; i < doc.fans.length; i++) {
+			Admin.find({ username: doc.fans[i] }).then(docss => {
+				if (docss.length == 0) {
+					res.json({
+						code: 204,
+						msg: "没有该用户"
+					})
+				} else {
+					let {
+						nickname,
+						photourl,
+						signature,
+						fans,
+						follow
+					} = docss[0]
+					let obj = {
+						nickname,
+						photourl,
+						signature,
+						fans: fans.length,
+						follow: follow.length
+					}
+					data.push(obj)
+					if (i === doc.fans.length - 1) {
+						res.json({
+							code: 200,
+							msg: "成功取到" + doc.fans.length + "条信息",
+							data
+						})
+					}
+				}
+			})
+		}
+	})
+}
+// 获取关注的人接口
 exports.Allfollow = (req, res) => {
 	const {
 		username
 	} = req.body
 	Admin.findOne({ username }).then(doc => {
-		if (doc) {
-			res.json({
-				code: '200',
-				mag: '成功',
-				data: {
-					fans: doc.fans,
-					follow: doc.follow,
-					username: doc.username
-				}
+		if (doc.follow.length == 0) {
+			return res.json({
+				code: 204,
+				msg: "该用户没有关注的人"
 			})
-		} else {
-			res.json({
-				code: '500',
-				mag: '服务器错误'
+		}
+		let data = []
+		for (let i = 0; i < doc.follow.length; i++) {
+			Admin.find({ username: doc.follow[i] }).then(docss => {
+				if (docss.length == 0) {
+					res.json({
+						code: 204,
+						msg: "没有该用户"
+					})
+				} else {
+					let {
+						nickname,
+						photourl,
+						signature,
+						fans,
+						follow
+					} = docss[0]
+					let obj = {
+						nickname,
+						photourl,
+						signature,
+						fans: fans.length,
+						follow: follow.length
+					}
+					data.push(obj)
+					if (i === doc.follow.length - 1) {
+						res.json({
+							code: 200,
+							msg: "成功取到" + doc.follow.length + "条信息",
+							data
+						})
+					}
+				}
 			})
 		}
 	})
