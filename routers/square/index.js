@@ -14,11 +14,11 @@ exports.SquareAlltopic = (req,res)=>{
         flags = { flag }
     }
     if(flags.flag == '最热'){
-        ReleaseTopic.find().sort({see: -1}).limit(3).then(docs => {
+        ReleaseTopic.find().sort({see: -1}).limit(10).then(docs => {
             getData(docs, res)
         })
     }else{
-        ReleaseTopic.find(flags).sort({time: -1}).skip((page) * 3).limit(3).then(docs => {
+        ReleaseTopic.find(flags).sort({time: -1}).skip((page) * 3).limit(10).then(docs => {
             getData(docs, res)
         })
     }
@@ -109,7 +109,7 @@ exports.SquareThumbscount = (req, res) => {
                         msg: "您已经点过赞了"
                     })
                 }
-            }else{
+            }else if(thumbs_flag == 0){
                 const flag = docs.thumbsArr.includes(username)
                 if(flag){
                     const data = {
@@ -139,6 +139,11 @@ exports.SquareThumbscount = (req, res) => {
                         msg: "您已经取消过了"
                     })
                 }
+            }else{
+                res.json({
+                    code: 204,
+                    msg: "该操作不符合规则"
+                })
             }
         }else{
             res.json({
