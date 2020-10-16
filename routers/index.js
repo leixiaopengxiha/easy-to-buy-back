@@ -75,6 +75,8 @@ router.post('/releasetopic', release.Releasetopic) // 发布话题
 
 // 我买的接口
 router.post('/getallbuy', transaction.GetAllbuy)
+// 帖子接口
+router.post('/getinvitation', transaction.Getinvitation)
 // 关注接口
 router.post('/followbtn', userfans.Followbtn)
 // 获取关注的人接口

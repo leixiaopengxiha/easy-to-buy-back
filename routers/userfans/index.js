@@ -166,17 +166,47 @@ exports.Allfollow = (req, res) => {
 // 编辑资料
 exports.Editprofile = (req, res) => {
 	const { username, signature, nickname } = req.body
-	Admin.updateOne({ username: username }, { $set: { signature, nickname } }).then(doc => {
-		if (doc) {
-			res.json({
-				code: 200,
-				msg: "修改成功"
-			})
-		} else {
-			res.json({
-				code: 501,
-				msg: "修改失败"
-			})
-		}
-	})
+	if(nickname==undefined){
+		Admin.updateOne({ username: username }, { $set: { signature } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "个性签名修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}else if(signature==undefined){
+		Admin.updateOne({ username: username }, { $set: { nickname } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "昵称修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}else{
+		Admin.updateOne({ username: username }, { $set: { signature, nickname } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "资料修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}
 }
