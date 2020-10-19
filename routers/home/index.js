@@ -76,7 +76,6 @@ exports.AddHistorical = (req, res) => {
     Historical.find({
         username
     }).then((doce) => {
-
         if (doce.length === 0) {
             addh()
         } else {
