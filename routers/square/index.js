@@ -66,6 +66,36 @@ exports.SquarePanningDetails = (req,res)=>{
     })
 }
 
+// 广场话题详情
+exports.SquareTopicDetails = (req,res)=>{
+    const { id } = req.body
+    ReleaseTopic.findOne({_id: id}).then(docs => {
+        if(docs){
+            Admin.find({username: docs.username}).then(docss => {
+                if(docss.length == 0){
+                    res.json({
+                        code: 204,
+                        msg: "没有该用户"
+                    })
+                }else{
+                    let {nickname, photourl, fans, follow} = docss[0]
+                    let obj = {...docs._doc, nickname, photourl, fans, follow}
+                    res.json({
+                        code: 200,
+                        msg: '成功获取详情',
+                        data: obj
+                    })
+                }
+            })
+        } else {
+            res.json({
+                code: 201,
+                msg: '没有取到任何信息'
+            })
+        }
+    })
+}
+
 // 更新淘货点赞次数
 exports.SquareThumbscount = (req, res) => {
     const {
