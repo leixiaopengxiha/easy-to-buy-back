@@ -67,6 +67,7 @@ router.post('/getadmin', admin.Getadmin) // 获取当前登录用户信息
 router.post('/squaregetpanning', square.SquareAllpanning) // 获取淘货
 router.post('/squarepanningdetails', square.SquarePanningDetails) // 淘货详情
 router.post('/squaregettopic', square.SquareAlltopic) // 获取话题
+router.post('/squaretopicdetails', square.SquareTopicDetails) // 话题详情
 router.post('/squarethumbscount', square.SquareThumbscount) // 更新淘货点赞次数
 router.post('/uploadphoto', release.Uploadphoto) // 上传照片
 router.post('/cleararray', release.Cleararray) // 清空照片数组
