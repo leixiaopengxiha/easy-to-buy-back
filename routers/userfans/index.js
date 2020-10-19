@@ -1,7 +1,5 @@
 // 用户的粉丝详情和关注详情
-const {
-	Userfans, Admin
-} = require('../../db/user')
+const { Admin } = require('../../db/user')
 // 点击关注按钮的接口
 exports.Followbtn = (req, res) => {
 	const {
@@ -11,62 +9,41 @@ exports.Followbtn = (req, res) => {
 	// username: 点击关注的那个人
 	// tousername: 被关注的那个人
 	// 关注接口
-	Userfans.findOne({
+	Admin.findOne({
 		username: tousername
 	}).then(doc => {
 		if (doc) {
+			// 判断受否关注过此人
 			let flagfans = doc.fans.includes(username)
-			// let flagfollow = doc.follow.includes(tousername)
 			if (!flagfans) {
-				Admin.findOne({ username: tousername }).then(tundoc => {
-					if (tundoc) {
-						let data = {};
-						data.fans = tundoc.fans;
-						data.nickname = tundoc.nickname;
-						data.photourl = tundoc.photourl;
-						data.signature = tundoc.signature;
-						data.username = tundoc.username;
-						Userfans.updateOne({
-							username: username
-						}, {
-							$set: {
-								follow: [...doc.follow, data]
-							}
-						}).then(docs => {
-							if (docs) {
-								Admin.findOne({ username: username }).then(undoc => {
-									let todata = {};
-									todata.fans = undoc.fans;
-									todata.nickname = undoc.nickname;
-									todata.photourl = undoc.photourl;
-									todata.signature = undoc.signature;
-									todata.username = undoc.username;
-									Userfans.updateOne({
-										username: tousername
-									}, {
-										$set: {
-											fans: [...doc.fans, todata]
-										}
-									}).then(docss => {
-										if (docss) {
-											res.json({
-												code: "200",
-												msg: "关注成功"
-											})
-										} else {
-											res.json({
-												code: "501",
-												msg: "关注失败"
-											})
-										}
+				Admin.updateOne({
+					username: tousername
+				}, {
+					$set: {
+						fans: [...doc.fans, username]
+					}
+				}).then(docs => {
+					if (docs) {
+						Admin.findOne({ username: username }).then(undoc => {
+							Admin.updateOne({
+								username: username
+							}, {
+								$set: {
+									follow: [...undoc.follow, tousername]
+								}
+							}).then(docss => {
+								if (docss) {
+									res.json({
+										code: "200",
+										msg: "关注成功"
 									})
-								})
-							} else {
-								res.json({
-									code: "501",
-									msg: "关注失败"
-								})
-							}
+								} else {
+									res.json({
+										code: "501",
+										msg: "关注失败"
+									})
+								}
+							})
 						})
 					} else {
 						res.json({
@@ -75,43 +52,113 @@ exports.Followbtn = (req, res) => {
 						})
 					}
 				})
+
 			} else {
 				res.json({
 					code: "400",
 					msg: "你已经关注过了"
 				})
 			}
-		}else{
+		} else {
 			res.json({
 				code: "400",
 				msg: "没有该用户"
 			})
 		}
 	})
-	// 关注的人
 }
-// 获取关注的人和粉丝接口
+// 获取粉丝接口
+exports.Allfans = (req, res) => {
+	const {
+		username
+	} = req.body
+	Admin.findOne({ username }).then(doc => {
+		if (doc.fans.length == 0) {
+			return res.json({
+				code: 204,
+				msg: "该用户没有粉丝"
+			})
+		}
+		let data = []
+		for (let i = 0; i < doc.fans.length; i++) {
+			Admin.find({ username: doc.fans[i] }).then(docss => {
+				if (docss.length == 0) {
+					res.json({
+						code: 204,
+						msg: "没有该用户"
+					})
+				} else {
+					let {
+						nickname,
+						photourl,
+						signature,
+						fans,
+						follow
+					} = docss[0]
+					let obj = {
+						nickname,
+						photourl,
+						signature,
+						fans: fans.length,
+						follow: follow.length
+					}
+					data.push(obj)
+					if (i === doc.fans.length - 1) {
+						res.json({
+							code: 200,
+							msg: "成功取到" + doc.fans.length + "条信息",
+							data
+						})
+					}
+				}
+			})
+		}
+	})
+}
+// 获取关注的人接口
 exports.Allfollow = (req, res) => {
 	const {
 		username
 	} = req.body
-	Userfans.findOne({
-		username: username
-	}).then(doc => {
-		if (doc) {
-			res.json({
-				code: '200',
-				mag: '成功',
-				data: {
-					fans: doc.fans,
-					follow: doc.follow,
-					username: doc.username
-				}
+	Admin.findOne({ username }).then(doc => {
+		if (doc.follow.length == 0) {
+			return res.json({
+				code: 204,
+				msg: "该用户没有关注的人"
 			})
-		} else {
-			res.json({
-				code: '500',
-				mag: '服务器错误'
+		}
+		let data = []
+		for (let i = 0; i < doc.follow.length; i++) {
+			Admin.find({ username: doc.follow[i] }).then(docss => {
+				if (docss.length == 0) {
+					res.json({
+						code: 204,
+						msg: "没有该用户"
+					})
+				} else {
+					let {
+						nickname,
+						photourl,
+						signature,
+						fans,
+						follow
+					} = docss[0]
+					let obj = {
+						nickname,
+						photourl,
+						signature,
+						fans: fans.length,
+						follow: follow.length
+					}
+					data.push(obj)
+					if (i === doc.follow.length - 1) {
+						res.json({
+							code: 200,
+							msg: "成功取到" + doc.follow.length + "条信息",
+							data
+						})
+					}
+				}
 			})
 		}
 	})

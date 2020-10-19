@@ -27,14 +27,14 @@ let movieSchema = new mongoose.Schema({
 let Admin = mongoose.model('admin', movieSchema)
 
 // 用户粉丝和关注详情
-let userfansSchema = new mongoose.Schema({
-  username: String, // 用户账号
-  fans: Array, // 用户的粉丝详情
-  follow: Array // 用户的关注详情
-}, {
-  collection: 'userfans'
-})
-let Userfans = mongoose.model('userfans', userfansSchema)
+// let userfansSchema = new mongoose.Schema({
+//   username: String, // 用户账号
+//   fans: Array, // 用户的粉丝详情
+//   follow: Array // 用户的关注详情
+// }, {
+//   collection: 'userfans'
+// })
+// let Userfans = mongoose.model('userfans', userfansSchema)
 
 
 // // 轮播图表
@@ -81,7 +81,6 @@ let Userfans = mongoose.model('userfans', userfansSchema)
 // 将表暴露出去
 module.exports = {
   Admin, // 用户表
-  Userfans,
   // Commodity, //商品表
   // Order, //购物车表
   // Mycommodity // 课程表
