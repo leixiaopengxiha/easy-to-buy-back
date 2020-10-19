@@ -135,7 +135,9 @@ exports.Getadmin = (req, res) => {
                             username: ret.username,
                             signature: ret.signature,
                             fans: ret.fans.length,
+                            allfans: ret.fans,
                             follow: ret.follow.length,
+                            allfollow: ret.follow,
                             thumbs: ret.thumbs,
                             id: ret._id,
                             token: jwt.sign({
