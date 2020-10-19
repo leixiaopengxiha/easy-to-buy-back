@@ -57,19 +57,10 @@ exports.Search = (req, res) => {
         ReleaseAside.find({
             title
         }).then(docs => {
-            if (docs.length == 0) {
-                res.json({
-                    code: 200,
-                    data: {
-                        text: '暂无次数据'
-                    }
-                })
-            } else {
-                res.json({
-                    code: 200,
-                    data: docs
-                })
-            }
+            res.json({
+                code: 200,
+                data: docs
+            })
         })
     }
 }
@@ -85,11 +76,13 @@ exports.AddHistorical = (req, res) => {
     Historical.find({
         username
     }).then((doce) => {
+
         if (doce.length === 0) {
             addh()
         } else {
+            let aa = JSON.parse(JSON.stringify(doce[0].histori))
+            aa = aa.filter(item => item != content)
             if (doce[0].histori.length >= 10) {
-                let aa = JSON.parse(JSON.stringify(doce[0].histori))
                 aa.pop()
                 let histori = {
                     histori: [content, ...aa]
@@ -105,7 +98,7 @@ exports.AddHistorical = (req, res) => {
                 })
             } else {
                 let histori = {
-                    histori: [content, ...doce[0].histori]
+                    histori: [content, ...aa]
                 }
                 Historical.updateMany({
                     username
