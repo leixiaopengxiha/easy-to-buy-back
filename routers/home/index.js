@@ -78,12 +78,12 @@ exports.AddHistorical = (req, res) => {
         if (doce.length === 0) {
             addh()
         } else {
-            let aa = JSON.parse(JSON.stringify(doce[0].histori))
-            aa = aa.filter(item => item != content)
-            if (doce[0].histori.length >= 10) {
-                aa.pop()
+            let historiData = JSON.parse(JSON.stringify(doce[0].histori))
+            historiData = historiData.filter(item => item != content)
+            if (historiData.length >= 10) {
+                historiData.pop()
                 let histori = {
-                    histori: [content, ...aa]
+                    histori: [content, ...historiData]
                 }
                 Historical.updateMany({
                     username
@@ -96,7 +96,7 @@ exports.AddHistorical = (req, res) => {
                 })
             } else {
                 let histori = {
-                    histori: [content, ...aa]
+                    histori: [content, ...historiData]
                 }
                 Historical.updateMany({
                     username
