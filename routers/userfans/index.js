@@ -1,4 +1,5 @@
 // 用户的粉丝详情和关注详情
+const { json } = require('body-parser')
 const { Admin } = require('../../db/user')
 // 点击关注按钮的接口
 exports.Followbtn = (req, res) => {
@@ -6,6 +7,17 @@ exports.Followbtn = (req, res) => {
 		username,
 		tousername
 	} = req.body
+	if(!username||!tousername){
+		res.json({
+			code:202,
+			msg:'发送的信息有误'
+		})
+	}else if(username==tousername){
+		res.json({
+			code:203,
+			msg:"不能关注自己"
+		})
+	}
 	// username: 点击关注的那个人
 	// tousername: 被关注的那个人
 	// 关注接口

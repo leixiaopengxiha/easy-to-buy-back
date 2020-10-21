@@ -41,6 +41,7 @@ const square = require('./square/index')
 const release = require('./release/index')
 const userfans = require('./userfans/index')
 const transaction = require('./transaction/index')
+const news = require('./news/news.js')
 router.get('/', (req, res) => {
     res.json({
         code: '200',
@@ -85,4 +86,9 @@ router.post('/allfollow', userfans.Allfollow)
 router.post('/allfans', userfans.Allfans)
 // 编辑资料接口
 router.post('/editprofile', userfans.Editprofile)
+
+router.post('/news',news.getnewsdata)
+router.post('/newshismydata',news.newshismydata)
+router.post('/newstiezidata',news.newstiezidata)
+router.post('/newsdongtaidata',news.newsdongtaidata)
 module.exports = router
