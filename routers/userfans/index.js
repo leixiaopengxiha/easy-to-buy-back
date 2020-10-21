@@ -90,6 +90,7 @@ exports.Allfans = (req, res) => {
 				} else {
 					let {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans,
@@ -97,6 +98,7 @@ exports.Allfans = (req, res) => {
 					} = docss[0]
 					let obj = {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans: fans.length,
@@ -138,6 +140,7 @@ exports.Allfollow = (req, res) => {
 				} else {
 					let {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans,
@@ -145,6 +148,7 @@ exports.Allfollow = (req, res) => {
 					} = docss[0]
 					let obj = {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans: fans.length,
