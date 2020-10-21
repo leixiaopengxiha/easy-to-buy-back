@@ -1,4 +1,5 @@
 // 用户的粉丝详情和关注详情
+const { json } = require('body-parser')
 const { Admin } = require('../../db/user')
 // 点击关注按钮的接口
 exports.Followbtn = (req, res) => {
@@ -6,6 +7,17 @@ exports.Followbtn = (req, res) => {
 		username,
 		tousername
 	} = req.body
+	if(!username||!tousername){
+		res.json({
+			code:202,
+			msg:'发送的信息有误'
+		})
+	}else if(username==tousername){
+		res.json({
+			code:203,
+			msg:"不能关注自己"
+		})
+	}
 	// username: 点击关注的那个人
 	// tousername: 被关注的那个人
 	// 关注接口
@@ -90,6 +102,7 @@ exports.Allfans = (req, res) => {
 				} else {
 					let {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans,
@@ -97,6 +110,7 @@ exports.Allfans = (req, res) => {
 					} = docss[0]
 					let obj = {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans: fans.length,
@@ -138,6 +152,7 @@ exports.Allfollow = (req, res) => {
 				} else {
 					let {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans,
@@ -145,6 +160,7 @@ exports.Allfollow = (req, res) => {
 					} = docss[0]
 					let obj = {
 						nickname,
+						username,
 						photourl,
 						signature,
 						fans: fans.length,
@@ -166,17 +182,47 @@ exports.Allfollow = (req, res) => {
 // 编辑资料
 exports.Editprofile = (req, res) => {
 	const { username, signature, nickname } = req.body
-	Admin.updateOne({ username: username }, { $set: { signature, nickname } }).then(doc => {
-		if (doc) {
-			res.json({
-				code: 200,
-				msg: "修改成功"
-			})
-		} else {
-			res.json({
-				code: 501,
-				msg: "修改失败"
-			})
-		}
-	})
+	if(nickname==undefined){
+		Admin.updateOne({ username: username }, { $set: { signature } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "个性签名修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}else if(signature==undefined){
+		Admin.updateOne({ username: username }, { $set: { nickname } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "昵称修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}else{
+		Admin.updateOne({ username: username }, { $set: { signature, nickname } }).then(doc => {
+			if (doc) {
+				res.json({
+					code: 200,
+					msg: "资料修改成功"
+				})
+			} else {
+				res.json({
+					code: 501,
+					msg: "修改失败"
+				})
+			}
+		})
+	}
 }
